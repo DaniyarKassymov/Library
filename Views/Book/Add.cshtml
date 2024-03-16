@@ -1,0 +1,80 @@
+@model Library.ViewModels.BookViewModels.BookAddVm
+
+@{
+    ViewBag.Title = "Добавление книги";
+    Layout = "_Layout";
+}
+
+<div class="d-flex justify-content-center">
+    <div class="card w-50">
+        <h3 class="text-center card-header">Заполните форму</h3>
+        <div class="card-body">
+            <div class="card-text row">
+                <form asp-action="Add" method="post">
+                    <div class="form-group mb-3">
+                        <label for="category" class="mb-2">Категория</label>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        <select class="form-control" id="category" asp-for="CategoryId">
+                            <option selected="selected" value="">Все</option>
+                            @foreach (var categoryIndexVm in Model.CategoryIndexVms)
+                            {
+                                <option value="@categoryIndexVm.Id">@categoryIndexVm.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label for="name" class="mb-2">Имя:</label>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                        <input asp-for="Name"
+                               type="text"
+                               class="form-control"
+                               id="name">
+                    </div>
+                    <div>
+                        <label for="price" class="mb-2">Автор:</label>
+                        <span asp-validation-for="Author" class="text-danger"></span>
+                        <input asp-for="Author"
+                               type="text"
+                               class="form-control"
+                               id="price"
+                               value="">
+                    </div>
+                    <div>
+                        <label for="description" class="mb-2">Описание:</label>
+                        <input asp-for="Description"
+                               type="text"
+                               class="form-control"
+                               id="description">
+                    </div>
+                    <div>
+                        <label for="imageLink" class="mb-2">Ссылка на изображение:</label>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                        <input asp-for="Image"
+                               type="text"
+                               class="form-control"
+                               id="imageLink">
+                    </div>
+                    <div>
+                        <label for="releaseDate" class="mb-2">Год выпуска:</label>
+                        <input asp-for="ReleaseDate"
+                               type="date"
+                               class="form-control"
+                               id="releaseDate">
+                    </div>
+                    <input type="hidden" asp-for="AddDate">
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-outline-dark my-3">
+                            Добавить книгу
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
